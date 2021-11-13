@@ -1,0 +1,48 @@
+.book:hover{
+   cursor: pointer;
+    border: 1px solid 	#303030;
+}
+.book{
+    border: 1px solid white;
+
+}
+
+a:hover{
+   text-decoration: underline;
+}
+
+tr:hover{
+    cursor: pointer;
+}
+
+tr{
+    border-top: 1px solid #A0A0A0;
+}
+.lista:hover{
+    cursor: pointer;
+
+}
+
+.butn:hover{
+    text-decoration: underline;
+    color: indigo;
+}
+.polje:hover>h4{
+
+    text-decoration: underline;
+}
+.list-class{
+    text-decoration: none;
+}
+.list-class:hover{
+    text-decoration: underline;
+}
+
+#list{
+    border: 0.3px solid white;
+}
+
+#list:hover{
+    border: 0.3px solid black;
+    cursor: pointer;
+}

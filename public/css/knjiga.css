@@ -1,0 +1,47 @@
+*{
+    font-family: 'MonteCarlo', cursive;
+}
+textarea {
+    border: none;
+    background-color:white;
+    resize: none;
+    outline: none;
+    border-radius: 20px;
+    top: 50%;
+}
+
+button{
+    border: none;
+    background-color: white;
+}
+textarea:focus{
+    border: 0.5px solid #A8A8A8;
+}
+textarea[placeholder]{
+   text-align: center;
+}
+textarea:not(:focus){
+    border:1px solid rgb(232,232,232);
+}
+
+.checked{
+    color: orange;
+}
+
+#zvjezdice{
+    display: inline;
+}
+/* #zvjezdice:not(:hover) > .checked{
+    color: black;
+}*/
+#ocjenjivanje{
+    font-family: 'Style Script', cursive;
+    font-size: 1.6rem;
+}
+span{
+    color: 	#BEBEBE;
+}
+a:hover{
+  text-decoration: underline;
+}
+

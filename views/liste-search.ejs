@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: 'MonteCarlo', cursive;
+
+        }
+    </style>
+    <link rel="stylesheet" href="/css/korisnik.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>EBiblioteka</title>
+</head>
+<body>
+    <%- include('./partials/navbar') %>
+
+    <div class="container" style="margin-bottom: 100px;">
+        <h4 class="text-primary">Liste</h4>
+
+        <div class="row mt-4">
+            <div class="col-8 text-center  ">
+                <div class="row">
+
+                    <% 
+                    let br=0
+                    let k
+                   
+                    if(moje_liste) { 
+                        
+                        for(var i=0; i<moje_liste.length; i=i+k) {
+                            k=0;
+                            var brojac=0;
+                            var br_knjiga=0
+                            
+                        %>
+
+
+                        <div class="col-5 mb-2 p-1 ms-2 <%=moje_liste[i].lista_id%>" style="margin-right: 20px;" id="list" onclick="window.location='/korisnik/liste/moje-liste/<%=moje_liste[i].lista_id%>'">
+                            <div class="d-flex justify-content-start mt-2">
+                              <%  for(var j=i;j<moje_liste.length;j++) { 
+                                if(moje_liste[i].lista_id===moje_liste[j].lista_id)  {
+                                    k++;
+                                    brojac++
+
+                                    if(moje_liste[i].naziv){
+                                        br_knjiga++
+                                    }
+                                    if(brojac<6) { 
+                                       
+                                %>
+                             <img src="/assets/knjige/<%=moje_liste[j].slika%>" alt="" style="width:20%;">
+
+                             <% } }
+                            } 
+                           %>
+
+                            <!-- <img src="/assets/knjige/prokleta_avlija.jpg" alt="" style="width: 20%;">
+                                <img src="/assets/knjige/koliba.jpg" alt="" style="width: 20%;">
+                                <img src="/assets/knjige/jama.jpg" alt="" style="width: 20%;"> 
+                                <img src="/assets/knjige/kruna_ponoci.jpg" alt="" style="width: 20%;">-->
+                            </div>
+                            <p class="text-start mb-0 text-info" style="font-size:11pt"><%=moje_liste[i].ime_liste%>
+                            </p>
+                            <p style="font-size:11pt;" class="mb-0 text-start lead">Broj knjiga:<%=br_knjiga%></p>
+
+                        </div>
+                        <% } }else{ %>
+                            <h2>Ne postji lista</h2>
+                            <% } %>
+
+
+                </div>
+
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-between mb-3">
+                    <div style="width: 60%; position: relative;">
+                        <input type="text" name="" id="" placeholder="Pretrazi liste" 
+                            style="position: absolute; width: 100%;">
+                    </div>
+                    <div style="width: 38%;  ">
+                        <button id="search" class="btn-outline-warning" onclick="pretraziListe(this)"
+                            style="background-color: blanchedalmond; border: 1px solid 	rgb(200,200,200);">Pretrazi</button>
+                    </div>
+                </div>
+                <div class="mt-2 ">
+                    <a href="/korisnik/liste/nova" class="list-class" class=""
+                        style=" color: #5F9EA0;">Napravi
+                        novu listu</a><br>
+                    <a href="/korisnik/liste/moje-liste" class="list-class" style=" color: #5F9EA0;">Moje
+                        liste</a><br>
+                    <a href="" class="list-class" style="  color: #5F9EA0;">Vrati na glavnu</a><br>
+                </div>
+
+            </div>
+        </div>
+
+    </div>    
+
+    <%- include('./partials/footer') %>
+
+
+    <script src="/js/liste.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+        crossorigin="anonymous"></script>
+    
+</body>
+</html>

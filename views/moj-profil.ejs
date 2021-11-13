@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/book-icon.png">
+    <style>
+        * {
+            font-family: 'MonteCarlo', cursive;
+
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>EBiblioteka</title>
+</head>
+
+<body>
+
+    <%- include('./partials/navbar') %>
+
+        <div class="container" style="width: 80%; margin-bottom: 100px;">
+            <div class="d-flex justify-content-between mt-4">
+                <% if(podaci){ var dateObj=new Date(podaci[0].datum_rodjenja)
+                    let myDate =  (dateObj.getUTCDate())+ "." + (dateObj.getMonth() + 1) +  "." + (dateObj.getUTCFullYear()) ;
+                     %>
+                    <div class="d-flex justify-content-between" style="height: 200px; width: 75%;">
+                        <img src="/assets/citaoci/<%=podaci[0].slika%>" style="border: 0.5px solid #DCDCDC; width: 37%; border-radius: 70%;" alt="">
+                        <div style="width: 57%">
+                            <h4 class="border-bottom mt-1">
+                                <%=podaci[0].nadimak%>
+                            </h4>
+                            <p>Ime: <b>
+                                    <%=podaci[0].ime%>
+                                </b></p>
+                            <p>Prezime: <b>
+                                    <%=podaci[0].prezime%>
+                                </b></p>
+                            <p>Datum rodjenja: <b>
+                                    <%=myDate%>
+                                </b></p>
+                            <p>Privilegija: <% if(podaci[0].administrator){ %><b>Administrator</b>
+                                    <%} else {%><b>Citalac</b>
+                                        <% }%>
+                            </p>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+
+            <div style="margin-top: 10%;">
+                <h6 class="border-bottom">KNJIGE KOJE SAM DODAO</h6>
+                <table class="table mt-4 text-primary ">
+                    <thead>
+                        <% if(podaci[0].administrator){%>
+                        <th scope="col"></th>
+                        <th scope="col">Naziv</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Br. strana</th>
+                        <th scope="col">Godina</th>
+                        <% } %>
+                    </thead>
+                    <tbody>
+                        <% if(podaci[0].administrator){ for(var i=0;i<dodao_knjige.length;i++){ %>
+                            <tr id="addedBook" onclick=" window.location = '/korisnik/knjiga/<%=dodao_knjige[i].knjiga_id%>'">
+                                <th scope="row">
+                                    <%=i+1%>
+                                </th>
+                                <td>
+                                    <%=dodao_knjige[i].naziv%>
+                                </td>
+                                <td>
+                                    <%=dodao_knjige[i].autor%>
+                                </td>
+                                <td>
+                                    <%=dodao_knjige[i].broj_strana%>
+                                </td>
+                                <td>
+                                    <%=dodao_knjige[i].godina_objavljivanja%>
+                                </td>
+                            </tr>
+                            <% } } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <style>
+            #addedBook:hover{
+                border-bottom: 1px solid #6495ED;
+                cursor: pointer;
+            }
+        </style>
+
+        <%- include('./partials/footer') %>
+
+
+            <!--<script src="/js/liste.js"></script>-->
+
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+                integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+                integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+                crossorigin="anonymous"></script>
+
+</body>
+
+</html>

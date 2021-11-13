@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/book-icon.png">
+    <style>
+        * {
+            font-family: 'MonteCarlo', cursive;
+        }
+
+        .lista:hover {
+            cursor: pointer;
+
+        }
+
+        .polje:hover>h4 {
+
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/korisnik.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>EBiblioteka</title>
+</head>
+
+<body>
+
+
+    <!------------- NAVBAR --------------------->
+    <!------------------------------------------->
+    <%- include('./partials/navbar') %>
+
+
+        <!---------------BODY-------------------->
+
+        <div class="container d-flex justify-content-between mt-3 " style="margin-bottom: 100px;">
+
+
+            <!----------------DIO KNJIGE KOJE CITA I ZELI DA CITA/LIJEVI DIO---------------------->
+
+            <div class="row" style="width: 25%; height: 52vh;">
+                <div class="col-12 border-bottom lista polje" style=" margin-bottom: 30px; "
+                    onclick="window.location='/korisnik/lista-procitane'">
+                    <h4>Knjige koje sam procitao</h4>
+                    <img src="/assets/book-procitano.jpg" class="img-fluid w-50" alt=""><br>
+
+                    <!-- <a href="/korisnik/lista-procitane" class="text-decoration-none a-tag">Pregledaj listu</a>-->
+                </div><br>
+                <div class="col-12 border-bottom lista polje" style=" margin-bottom: 30px; "
+                    onclick="window.location='/korisnik/lista-zeli-procitati'">
+                    <h4>Knjige koje zelim procitati</h4>
+                    <img src="/assets/book-icon.png" class="img-fluid w-50" alt=""><br>
+
+                    <!-- <a href="/korisnik/lista-zeli-procitati" class="text-decoration-none a-tag">Pregledaj listu</a>-->
+                </div>
+            </div>
+
+
+            <!-----------------KONTEJNER ZA PRIKAZ KNJIGA IZ PRETRAGE---------------------->
+
+            <div class="container" style="width: 70%;">
+                <div id="knjige">
+
+                    <table class="table table-borderless">
+                        <thead>
+                            <% if(lista.length>0) {%>
+                                <tr class="text-center">
+                                    <th scope="col"></th>
+                                    <th scope="col">Slika</th>
+                                    <th scope="col">Naziv</th>
+                                    <th scope="col">Autor</th>
+                                    <th scope="col">Godina</th>
+                                    <th scope="col"></th>
+
+                                </tr>
+                        </thead>
+                        <tbody>
+                            <% if(lista){ for(var i=0;i<lista.length;i++){%>
+                                <tr class="text-center border-top " id="<%=lista[i].knjiga_id%>"
+                                    onclick="window.location='/korisnik/knjiga/<%=lista[i].knjiga_id%>'">
+                                    <th scope="row">
+                                        <%=i+1%>
+                                    </th>
+                                    <td style="text-align:center;"><img style="  width: 60px; height: 100px;"
+                                            src="/assets/knjige/<%=lista[i].slika%>" alt=""></td>
+                                    <td>
+                                        <%=lista[i].naziv%>
+                                    </td>
+                                    <td>
+                                        <%=lista[i].autor%>
+                                    </td>
+                                    <td>
+                                        <%=lista[i].godina_objavljivanja%>
+                                    </td>
+                                    <td onclick="deleteFromList(this)">X</td>
+                                </tr>
+                                <% } } } else {%>
+                                    <h2 class="text-center"> Niste dodali knjige u listu</h2>
+                                    <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+            <script src="/js/pretraga.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+                integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+                integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+                crossorigin="anonymous"></script>
+</body>
+
+</html>

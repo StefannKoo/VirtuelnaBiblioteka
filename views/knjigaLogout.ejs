@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/book-icon.png">
+    <link rel="stylesheet" href="/css/knjiga.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Style+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>EBiblioteka</title>
+</head>
+<body>
+
+      <!------------- NAVBAR --------------------->
+    <!------------------------------------------->
+    <%- include('./partials/navbarLogout') %>
+
+    <div class="container mt-3 d-flex justify-content-center" style="height: auto; margin-bottom: 150px;">
+        <div style="width: 40%;" class="text-center ">
+            <img class="img-fluid w-50 border border-dark" src="/assets/knjige/<%=knjiga[0].slika%>">
+        </div>
+
+        <div style="width: 60%;">
+            <h2>
+                <%=knjiga[0].naziv%>
+            </h2><br>
+            <p>Autor: <b class="lead">
+                    <%=knjiga[0].autor%>
+                </b></p>
+            <p id="ocjena">Ocjena:<b>
+                        <%
+                        if(prosjecna_ocjena){%>
+                        <%=(prosjecna_ocjena).toFixed(2)%>
+                        <%}%>
+                    </b></p>
+            <p>Broj strana:<b>
+                        <%=knjiga[0].broj_strana%>
+                    </b></p>
+            <p>Godina objavljivanja:<b>
+                        <%=knjiga[0].godina_objavljivanja%>
+                    </b></p>
+            <p>
+                Kratak sadrzaj:<br><br>
+                <i>
+                    <%=knjiga[0].kratak_sadrzaj%>
+                </i>
+            </p>
+          
+            <!-----------KOMENTARI-------------->
+            <div style="margin-top: 100px;">
+
+              
+
+                <!---------------------NORMALAN KOMETAR------------------->
+                <div id="kontejner">
+
+                    <% if(komentari.length>0){
+                        for(var i=0;i<komentari.length;i++){ %>
+
+                            <div id="<%= komentari[i].komentar_id%>">
+                                <div class="border-top mt-5 row justify-content-center"
+                                    style="width: 100%; height:auto; " id="komentar">
+
+                                    <div class="col-2 text-center mt-2">
+                                        <img src="/assets/citaoci/<%=komentari[i].slika %>" alt=""
+                                            class="img-fluid " style=" border-radius: 50%; width: 60px; height: 60px;">
+                                    </div>
+                                    <div class="col-10 mt-2" style="overflow-wrap: break-word;">
+                                        <div class="row">
+                                            <p class="lead text-secondary col-4">
+                                                <%=komentari[i].nadimak%>
+                                            </p>
+                                            <div class="col-4"></div>
+                                            <p class="text-secondary col-4">
+                                                <%=komentari[i].vrijeme.toDateString()%>
+                                            </p><br>
+                                        </div>
+                                        <%=komentari[i].tekst%>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-7"></div>
+
+                                        <!--=================LAJK DISLAJK=====-->
+                                        <% var likes=0;
+                                           var dislikes=0;
+                                        if(nizLajkDislajk.length>0){
+                                            for(var j=0;j<nizLajkDislajk.length;j++){
+                                              if(nizLajkDislajk[j].komentar_id===komentari[i].komentar_id){
+                                                  likes=nizLajkDislajk[j].likes
+                                                  dislikes=nizLajkDislajk[j].dislikes
+                                              }
+                                            }
+                                        }%>
+                                        <button class="col-1 far fa-thumbs-up " id="lajk"
+                                           ><%=likes%></button>
+                                        <button class="col-1 far fa-thumbs-down" id="dislajk"
+                                          ><%=dislikes%></button>
+                                        <% br_odg=0; if(odg){ for(var j=0;j<odg.length;j++){
+                                            if(odg[j].patent_komentar_id===komentari[i].komentar_id){ br_odg++; } }
+                                            } %>
+
+                                            <button  onclick="sakrijPrikaziKomentare(this)"
+                                                class="col-2 far fa-comments <%=komentari[i].komentar_id%>">
+                                                <%=br_odg%>
+                                            </button>
+                                           
+                                    </div>
+
+
+
+
+                                    <!-----------------DIO ZA PRIKAZ REPLY-A----------------->
+
+                                    <div class="" id="k" style="width: 95%; margin-left: 8vw; ">
+                                        <div id="odgovori">
+
+                                            <% if(odg){ for(var j=0;j<odg.length;j++){
+                                                if(odg[j].patent_komentar_id===komentari[i].komentar_id){ %>
+
+                                                <div class="row mt-2 " id="<%=odg[j].komentar_id%>"
+                                                    style="display: flex;">
+                                                    <div class="col-2 text-center mt-2 ">
+                                                        <img src="/assets/citaoci/<%=odg[j].slika%>"
+                                                            style="border-radius: 50%; width: 60px; height: 60px;" alt=""
+                                                            class="img-fluid ">
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <p class="lead text-secondary">
+                                                            <%=odg[j].nadimak%>
+                                                        </p>
+                                                        <%=odg[j].tekst%>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-10"></div>
+                                                        <% var likes1=0;
+                                                        var dislikes1=0;
+                                                     if(nizLajkDislajk.length>0){
+                                                         for(var k=0;k<nizLajkDislajk.length;k++){
+                                                           if(nizLajkDislajk[k].komentar_id===odg[j].komentar_id){
+                                                               likes1=nizLajkDislajk[k].likes
+                                                               dislikes1=nizLajkDislajk[k].dislikes
+                                                           }
+                                                         }
+                                                     }%>
+
+                                                        <button class="col-1 far fa-thumbs-up" id="lajk"
+                                                          ><%=likes1%></button>
+                                                        <button class="col-1 far fa-thumbs-down" id="dislajk"
+                                                            ><%=dislikes1%></button>
+                                                    </div>
+                                                </div>
+                                                <% } } }%>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <% } } %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
+
+
+
+        <script src="/js/knjiga-logout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+            integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+            integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+            crossorigin="anonymous"></script>
+    
+</body>
+</html>
